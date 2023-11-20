@@ -1,2 +1,2 @@
-# LabsUnaj_PSA
+# LabsUnaj_PSE
 Laboratorio de sistemas embebidos
