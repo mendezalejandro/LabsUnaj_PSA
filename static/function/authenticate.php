@@ -1,12 +1,12 @@
 <?php
     include 'api_token_service.php';
+
+    
     if (isset($_GET['token'])) {
         // Obtiene el valor del parámetro 'nombre'
         $token = $_GET['token'];
     } else {
-        echo "<script type='text/javascript'>
-        window.location='access-denied.php';
-        </script>";
+        echo 'access-denied.php';
     }
 
     $response = validateToken($token);
@@ -17,15 +17,11 @@
         $codigo = $response["codigo"];
 
         if($codigo === 'TURNOS-ERR-012'){
-            echo "<script type='text/javascript'>
-            window.location='logout.php';
-            </script>";    
+            echo 'logout.php';
         }
         else
         {
-            echo "<script type='text/javascript'>
-                window.location='access-denied.php';
-            </script>";
+            echo 'access-denied.php';
         }
         $tokenValido = false;
     }
@@ -34,8 +30,6 @@
         $tokenValido = true;
         $labURL = '/lab.php?token=' . $token;
 
-        echo "	<script type='text/javascript'>
-                   window.location.replace('" . $labURL . "');
-                </script>";
+        echo $labURL;
     }
 ?>

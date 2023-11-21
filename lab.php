@@ -9,7 +9,9 @@
             // Obtiene el valor del parámetro 'nombre'
             $token = $_GET['token'];
         } else {
-            die("El parámetro 'token' no está presente en la URL");
+            echo "	<script type='text/javascript'>
+                window.location='access-denied.php';
+            </script>";
         }
     
         $response = validateToken($token);
@@ -75,31 +77,6 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- <div class="collapse navbar-collapse" id="navbars01">
-
-                <ul class="navbar-nav mx-auto mb-2 mb-sm-0">
-
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Laboratorio remoto</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Contacto</a>
-                    </li>
-
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="static/function/logout.php" class="nav-link log-out"><i class="fa-solid fa-power-off"></i>
-                            Cerrar Sesión</a>
-
-                    </li>
-                </ul>
-
-            </div> -->
         </div>
     </nav>
 
@@ -458,7 +435,7 @@
         }
 
         var currentPercent = Math.round(((minutes*60) * 100) / sessionTime);
-        console.log(currentPercent)
+
         $("#progress").css("width", (currentPercent+"%"));
         if (currentPercent < 10) {
             $('#progress').removeClass().addClass('progress-bar bg-danger');
