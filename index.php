@@ -3,19 +3,48 @@
 
 <head>
     <?php include "static/include/head.php"; ?>
+    <?php include "static/function/environment.php"; ?>
     <?php 
-        include 'static/function/api_token_service.php';
         if (isset($_GET['token'])) {
             // Obtiene el valor del parámetro 'nombre'
             $token = $_GET['token'];
         } else {
             echo "	<script type='text/javascript'>
-                window.location='access-denied.php';
+            window.location='access-denied.php';
             </script>";
         }
-        $response = validateToken($token);
+
+
+
+
+        function http_get($url) {
+            $options = [
+                'http' => [
+                    'ignore_errors' => true,
+                ],
+            ];
+
+            $context = stream_context_create($options);
+            $response = file_get_contents($url, false, $context);
+
+            if ($response === FALSE) {
+                // Manejar el error de solicitud
+                return null;
+            }
+            $data = json_decode($response, true);
+            return $data;
+        }
+
+        $endpoint =  apiTokenURL . "/turno/token/" . $token;
+        $response = http_get($endpoint);
+
         // Verifica si la solicitud fue exitosa
-        if($response["codigo"] !== null)
+        if($response == null){
+            echo "	<script type='text/javascript'>
+                        window.location='no-connection.php';
+                    </script>";
+        }
+        else if($response["codigo"] !== null)
         {
             echo "	<script type='text/javascript'>
                         window.location='logout.php';
@@ -383,7 +412,7 @@
 
 
 <script>
-    
+
     //Establecer la fecha en la que estamos contando hacia atrás. En este caso solo es la hora final de la reserva. 
     var countDownDate = new Date("<?php echo $dateAndTimeEnd ?>").getTime();
     var sessionTime = <?php echo $sessionMinutes ?> * 60;
