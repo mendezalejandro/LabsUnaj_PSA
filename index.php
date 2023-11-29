@@ -38,8 +38,9 @@
         $endpoint =  apiTokenURL . "/turno/token/" . $token;
         $response = http_get($endpoint);
 
+
         // Verifica si la solicitud fue exitosa
-        if($response == null){
+        if($response == null || isset($response['status'])){
             echo "	<script type='text/javascript'>
                         window.location='no-connection.php';
                     </script>";
