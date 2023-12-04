@@ -1,5 +1,5 @@
 # Usa una imagen base con PHP y Apache
-FROM php:7.4-apache
+FROM php:8.0.28-apache
 
 # Copia los archivos de tu aplicación al contenedor
 COPY . /var/www/html
