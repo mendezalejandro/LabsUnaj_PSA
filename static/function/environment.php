@@ -1,7 +1,7 @@
 <?php
     $isProd = true;
 
-    if($isProd)
+    if($isProd == false)
         include 'config_dev.php';
     else
         include 'config_prod.php';

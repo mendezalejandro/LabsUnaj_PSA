@@ -244,7 +244,6 @@
 
                         document.getElementById("usuario").innerHTML = usuario;
                         document.getElementById("reserva-activa").innerHTML = `<i class="fa-regular fa-calendar-days"></i> ${date}, <i class="fa-regular fa-clock"></i> ${timeInit}-${timeEnd}`;
-                        document.getElementById("sesion-id").value = id_session;
 
                         var countDownDate = new Date(dateAndTimeEnd).getTime();
                         var sessionTime = sessionMinutes* 60;
@@ -273,9 +272,8 @@
 
                             // Si la cuenta regresiva ha terminado, volvemos a la gestión de reservas. Se termino la sesión
                             if (distance < 0) {
+                                window.location = 'logout.php';
                                 clearInterval(x);
-                                window.location.replace('/logout.php');
-                        
                             }
 
                             var currentPercent = Math.round(((minutes*60) * 100) / sessionTime);
@@ -300,10 +298,7 @@
                     }
                 },
                 error: function(error) {
-                    if (error.responseJSON.status) {
-                        console.log(error)
-                        window.location = 'no-connection.php';
-                    } else if (error.responseJSON.codigo !== null) {
+                    if (error.responseJSON && error.responseJSON.codigo !== null) {
                         window.location = 'logout.php';
                     }
                     else{
